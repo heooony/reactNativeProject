@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import { render } from 'react-dom';
+import React, { useState, useEffect } from 'react';
 import { 
   StyleSheet, 
   Text,
@@ -10,11 +9,47 @@ import {
   Platform, 
   ScrollView} from 'react-native';
 import ToDo from './ToDo'
-
+import {AppLoading} from "expo"
+import uuidv1 from "uuid/v1"
 const {height, width} = Dimensions.get("window")
 
 export default function App () {
   const[newToDo, setNewToDo] = useState("")
+  const[loadedToDos, setLoadedToDos] = useState(true)
+  const[toDos, setTodos] = useState("")
+
+  useEffect(() => {
+    console.log(toDos)
+  });
+  const _addToDo = (prevState) => {
+    if(newToDo !== "") {
+      
+      const ID = uuidv1()
+      const newToDoObject = {
+        [ID]: {
+          id: ID,
+          isCompleted: false,
+          text:newToDo,
+          createdAt: Date.now()
+        }
+      }
+      const newState = {
+        ...prevState,
+        toDos: {
+          ...prevState.toDos,
+          ...newToDoObject
+        }
+      }
+      setTodos(toDos)
+      setNewToDo("")
+      console.log(prevState.ID)
+      return {...newState}
+    }
+  }
+  if(!loadedToDos) {
+    return <AppLoading/>
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -22,13 +57,15 @@ export default function App () {
       <View style={styles.card}>
         <TextInput 
           style={styles.input} 
-          placeholder={"new To do"} 
-          // value={newTodo}
+          placeholder={"New To Do"} 
+          value={newToDo}
           onChangeText={text => setNewToDo(text)}
           placeholderTextColor={"#999"}
-          returnKeyType={"done"}>
+          returnKeyType={"done"}
+          autoCorrect={false}
+          onSubmitEditing={_addToDo}>
         </TextInput>
-        <ScrollView>
+        <ScrollView contentContainerStyle={styles.toDos}>
           <ToDo />
         </ScrollView>
       </View>
@@ -75,5 +112,8 @@ const styles = StyleSheet.create({
     borderBottomColor: "#bbb",
     borderBottomWidth: 1,
     fontSize: 25
+  },
+  toDos: {
+    alignItems: "center"
   }
 });
