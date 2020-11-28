@@ -41,18 +41,18 @@ export default function ToDo(props) {
                                 isEditing(false)
                             }}>
                             <View style={styles.actionContainer}>
-                                <Text style={styles.actionText}>첵</Text>
+                                <Text style={styles.actionText}>체크</Text>
                             </View>
                         </TouchableOpacity>
                     </View> : <View style={styles.actions}>
                         <TouchableOpacity onPressOut={() => isEditing(true)}>
                             <View style={styles.actionContainer}>
-                                <Text style={styles.actionText}>연</Text>
+                                <Text style={styles.actionText}>수정</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity>
                             <View style={styles.actionContainer}>
-                                <Text style={styles.actionText}>엑</Text>
+                                <Text style={styles.actionText}>종료</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
