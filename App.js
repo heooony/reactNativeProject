@@ -43,7 +43,6 @@ export default function App () {
           }
         }
         setNewToDo("")
-        setToDos(newState)
         return {...newState}
       })
     }
@@ -69,7 +68,7 @@ export default function App () {
           onSubmitEditing={_addToDo}>
         </TextInput>
         <ScrollView contentContainerStyle={styles.toDos}>
-          <ToDo />
+          {Object.values(toDos.toDos).map(toDo => <ToDo key={toDo.id} {...toDo} />)}
         </ScrollView>
       </View>
     </View>

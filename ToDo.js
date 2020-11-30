@@ -8,12 +8,11 @@ import {View,
 
 const{ width, height } = Dimensions.get("window")
 
-export default function ToDo(props) {
+export default function ToDo() {
 
     const[editing, isEditing] = useState(false)
     const[completed, isCompleted] = useState(false)
-    const[toDoValue, setToDoValue] = useState("asd")
-    // const {text} = props
+    const[toDoValue, setToDoValue] = useState("")
 
     return(
         <View style={styles.container}>
@@ -99,8 +98,7 @@ const styles = StyleSheet.create({
     column: {
         flexDirection: "row",
         alignItems: "center",
-        width: width /2,
-        justifyContent: "space-between"
+        width: width / 2
     },
     actions: {
         flexDirection: "row"
@@ -112,6 +110,6 @@ const styles = StyleSheet.create({
     input: {
         width: width/2,
         marginVertical: 15,
-        paddingBottom: 5
+        paddingBottom: 4
     }
 })
