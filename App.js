@@ -16,36 +16,39 @@ const {height, width} = Dimensions.get("window")
 export default function App () {
   const[newToDo, setNewToDo] = useState("")
   const[loadedToDos, setLoadedToDos] = useState(true)
-  const[toDos, setTodos] = useState("")
+  const[toDos, setToDos] = useState("")
 
   useEffect(() => {
     console.log(toDos)
   });
-  const _addToDo = (prevState) => {
+
+  const _addToDo = () => {
     if(newToDo !== "") {
-      
-      const ID = uuidv1()
-      const newToDoObject = {
-        [ID]: {
-          id: ID,
-          isCompleted: false,
-          text:newToDo,
-          createdAt: Date.now()
+      //_addToDo.bind(newToDo)
+      setToDos(prevState => {
+        const ID = uuidv1()
+        const newToDoObject = {
+          [ID]: {
+            id: ID,
+            isCompleted: false,
+            text:newToDo,
+            createdAt: Date.now()
+          }
         }
-      }
-      const newState = {
-        ...prevState,
-        toDos: {
-          ...prevState.toDos,
-          ...newToDoObject
+        const newState = {
+          ...prevState,
+          toDos: {
+            ...prevState.toDos,
+            ...newToDoObject
+          }
         }
-      }
-      setTodos(toDos)
-      setNewToDo("")
-      console.log(prevState.ID)
-      return {...newState}
+        setNewToDo("")
+        setToDos(newState)
+        return {...newState}
+      })
     }
   }
+
   if(!loadedToDos) {
     return <AppLoading/>
   }
