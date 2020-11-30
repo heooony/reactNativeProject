@@ -37,13 +37,11 @@ export default function App () {
         }
         const newState = {
           ...prevState,
-          toDos: {
-            ...prevState.toDos,
-            ...newToDoObject
-          }
+          ...prevState.toDos,
+          ...newToDoObject
         }
         setNewToDo("")
-        return {...newState}
+        setToDos(newState)
       })
     }
   }
@@ -68,7 +66,7 @@ export default function App () {
           onSubmitEditing={_addToDo}>
         </TextInput>
         <ScrollView contentContainerStyle={styles.toDos}>
-          {Object.values(toDos.toDos).map(toDo => <ToDo key={toDo.id} {...toDo} />)}
+          {Object.values(toDos).map(toDo => <ToDo key={toDo.id} {...toDo.text} />)}
         </ScrollView>
       </View>
     </View>
