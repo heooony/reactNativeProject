@@ -18,9 +18,9 @@ export default function App () {
   const[loadedToDos, setLoadedToDos] = useState(true)
   const[toDos, setToDos] = useState("")
 
-  useEffect(() => {
-    console.log(toDos)
-  });
+  // useEffect(() => {
+  //   console.log(toDos)
+  // });
 
   const _addToDo = () => {
     if(newToDo !== "") {
@@ -46,6 +46,18 @@ export default function App () {
     }
   }
 
+  const _deleteToDo = (id) => {
+    setToDos(prevState => {
+      const toDos = prevState
+      delete toDos[id]
+      const newState = {
+        ...prevState,
+        ...toDos
+      }
+      setToDos(newState)
+    })
+  }
+
   if(!loadedToDos) {
     return <AppLoading/>
   }
@@ -66,7 +78,7 @@ export default function App () {
           onSubmitEditing={_addToDo}>
         </TextInput>
         <ScrollView contentContainerStyle={styles.toDos}>
-          {Object.values(toDos).map(toDo => <ToDo key={toDo.id} {...toDo.text} />)}
+          {Object.values(toDos).map(toDo => <ToDo key={toDo.id} {...toDo} deleteToDo={_deleteToDo}/>)}
         </ScrollView>
       </View>
     </View>

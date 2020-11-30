@@ -5,15 +5,20 @@ import {View,
         StyleSheet,
         Dimensions,
         TextInput} from "react-native"
+import PropTypes from "prop-types"
 
 const{ width, height } = Dimensions.get("window")
 
-export default function ToDo() {
-
+export default function ToDo(props) {
+    const propTypes = {
+        text: PropTypes.string.isRequired,
+        isCompleted: PropTypes.bool.isRequired,
+        deleteToDo: PropTypes.func.isRequired,
+        id: PropTypes.string.isRequired
+    }
     const[editing, isEditing] = useState(false)
     const[completed, isCompleted] = useState(false)
-    const[toDoValue, setToDoValue] = useState("")
-
+    const[toDoValue, setToDoValue] = useState(props.text)
     return(
         <View style={styles.container}>
             <View style={styles.column}>
@@ -49,7 +54,7 @@ export default function ToDo() {
                                 <Text style={styles.actionText}>수정</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPressOut={() => props.deleteToDo(props.id)}>
                             <View style={styles.actionContainer}>
                                 <Text style={styles.actionText}>종료</Text>
                             </View>
