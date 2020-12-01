@@ -14,15 +14,27 @@ export default function ToDo(props) {
         text: PropTypes.string.isRequired,
         isCompleted: PropTypes.bool.isRequired,
         deleteToDo: PropTypes.func.isRequired,
-        id: PropTypes.string.isRequired
+        id: PropTypes.string.isRequired,
+        completeToDo: PropTypes.func.isRequired
     }
     const[editing, isEditing] = useState(false)
     const[completed, isCompleted] = useState(false)
     const[toDoValue, setToDoValue] = useState(props.text)
+
+    const _toggleComplete = () => {
+        if(props.isCompleted) {
+            props.uncompleteToDo(props.id)
+            isCompleted(false)
+        }    
+        else {
+            props.completeToDo(props.id)
+            isCompleted(true)
+        }
+    }
     return(
         <View style={styles.container}>
             <View style={styles.column}>
-                <TouchableOpacity onPress={() => isCompleted(!completed)}>
+                <TouchableOpacity onPress={_toggleComplete}>
                     <View style={[
                         styles.circle,
                         completed ? styles.completedCircle : styles.uncompletedCircle
